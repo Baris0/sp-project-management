@@ -27,6 +27,6 @@ public class Task {
 
     private LocalDate updateDate;
 
-    private String assignee;
+    private User assignee;
 
 }

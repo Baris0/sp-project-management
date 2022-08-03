@@ -25,5 +25,5 @@ public class TaskDto {
 
     private LocalDate updateDate;
 
-    private String assignee;
+    private User assignee;
 }

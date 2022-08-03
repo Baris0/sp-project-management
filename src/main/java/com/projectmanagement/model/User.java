@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +22,4 @@ public class User {
     private UserType userType;
 
     private LocalDate createDate;
-
-    private List<Task> tasks;
 }

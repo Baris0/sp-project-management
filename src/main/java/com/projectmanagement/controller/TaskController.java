@@ -26,4 +26,15 @@ public class TaskController {
     public ResponseEntity<List<TaskDto>> getAll() {
         return new ResponseEntity<>(taskService.getAll(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{taskCode}")
+    public ResponseEntity<?> delete(@PathVariable("taskCode") int taskCode) {
+        taskService.delete(taskCode);
+        return new ResponseEntity<>(taskService, HttpStatus.OK);
+    }
+
+    @GetMapping("/{taskCode}")
+    public ResponseEntity<TaskDto> getByCode(@PathVariable("taskCode") int code) {
+        return new ResponseEntity<>(taskService.getByCode(code), HttpStatus.OK);
+    }
 }
