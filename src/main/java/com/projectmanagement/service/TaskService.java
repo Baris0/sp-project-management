@@ -5,6 +5,7 @@ import com.projectmanagement.dto.converter.TaskDtoConverter;
 import com.projectmanagement.dto.request.TaskCreateRequest;
 import com.projectmanagement.model.Task;
 import com.projectmanagement.repository.TaskRepository;
+import com.projectmanagement.util.MailSendService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class TaskService {
 
     private final UserService userService;
 
+    private final MailSendService mailSendService;
+
     public TaskDto save(TaskCreateRequest request) {
         Task task = new Task();
         task.setId(UUID.randomUUID().toString());
@@ -37,6 +40,7 @@ public class TaskService {
             task.setAssignee(userService.getByUserName(request.getAssignee()));
 
             taskRepository.save(task);
+            mailSendService.sendMail(userService.getByUser(request.getAssignee()).getMail(), "[YouTrack, Assigned] Issue" + task.getCode(), "" + task.getBody());
             return taskDtoConverter.convert(task);
         }
 
