@@ -30,7 +30,7 @@ public class TaskController {
     @DeleteMapping("/{taskCode}")
     public ResponseEntity<?> delete(@PathVariable("taskCode") int taskCode) {
         taskService.delete(taskCode);
-        return new ResponseEntity<>(taskService, HttpStatus.OK);
+        return new ResponseEntity<>(taskCode, HttpStatus.OK);
     }
 
     @GetMapping("/{taskCode}")
