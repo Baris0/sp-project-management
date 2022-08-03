@@ -22,4 +22,6 @@ public class User {
     private UserType userType;
 
     private LocalDate createDate;
+
+    private boolean isActive = true;
 }

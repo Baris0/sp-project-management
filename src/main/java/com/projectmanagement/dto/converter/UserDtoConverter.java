@@ -14,7 +14,8 @@ public class UserDtoConverter {
         return new UserDto(user.getFullName(),
                 user.getUserName(),
                 user.getMail(),
-                user.getUserType());
+                user.getUserType(),
+                user.isActive());
     }
 
     public List<UserDto> convert(List<User> users) {

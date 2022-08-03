@@ -27,6 +27,7 @@ public class UserService {
         user.setMail(request.getMail());
         user.setFullName(request.getFullName());
         user.setUserType(request.getUserType());
+        user.setActive(true);
 
         userRepository.save(user);
 
@@ -51,4 +52,8 @@ public class UserService {
         return userDtoConverter.convert(userRepository.findUserByUserName(userName));
     }
 
+    public boolean getActiveStatus(String userName) {
+        User user = userRepository.findUserByUserName(userName);
+        return user.isActive();
+    }
 }

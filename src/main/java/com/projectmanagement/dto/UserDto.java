@@ -15,4 +15,6 @@ public class UserDto {
     private String mail;
 
     private UserType userType;
+
+    private boolean isActive;
 }

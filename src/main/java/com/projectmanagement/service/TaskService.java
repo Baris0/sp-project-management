@@ -32,11 +32,15 @@ public class TaskService {
         task.setTitle(request.getTitle());
         task.setPriorityType(request.getPriorityType());
         task.setCreatedBy(request.getCreatedBy());
-        task.setAssignee(userService.getByUserName(request.getAssignee()));
 
-        taskRepository.save(task);
+        if (userService.getActiveStatus(request.getAssignee())) {
+            task.setAssignee(userService.getByUserName(request.getAssignee()));
 
-        return taskDtoConverter.convert(task);
+            taskRepository.save(task);
+            return taskDtoConverter.convert(task);
+        }
+
+        return null;
     }
 
     public List<TaskDto> getAll() {
