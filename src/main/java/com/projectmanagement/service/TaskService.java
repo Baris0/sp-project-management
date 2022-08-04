@@ -3,6 +3,7 @@ package com.projectmanagement.service;
 import com.projectmanagement.dto.TaskDto;
 import com.projectmanagement.dto.converter.TaskDtoConverter;
 import com.projectmanagement.dto.request.TaskCreateRequest;
+import com.projectmanagement.dto.request.UpdateTaskRequest;
 import com.projectmanagement.model.Task;
 import com.projectmanagement.repository.TaskRepository;
 import com.projectmanagement.utils.MailSendService;
@@ -37,7 +38,7 @@ public class TaskService {
         task.setCreatedBy(request.getCreatedBy());
 
         if (userService.getActiveStatus(request.getAssignee())) {
-            task.setAssignee(userService.getByUserName(request.getAssignee()));
+            task.setAssignee(userService.getByUser(request.getAssignee()));
 
             taskRepository.save(task);
             mailSendService.sendMail(userService.getByUser(request.getAssignee()).getMail(), "[YouTrack, Assigned] Issue " + task.getCode(), "" + task.getBody());
@@ -58,6 +59,28 @@ public class TaskService {
 
     public TaskDto getByCode(int code) {
         return taskDtoConverter.convert(taskRepository.findTaskByCode(code));
+    }
+
+    public TaskDto update(int code, UpdateTaskRequest request){
+        Task task = taskRepository.findTaskByCode(code);
+
+        Task updatedTask = new Task();
+        updatedTask.setCode(task.getCode());
+        updatedTask.setUpdateDate(LocalDate.now());
+        updatedTask.setId(task.getId());
+        updatedTask.setTitle(request.getTitle());
+        updatedTask.setBody(request.getBody());
+        updatedTask.setPriorityType(request.getPriorityType());
+        updatedTask.setCreatedBy(task.getCreatedBy());
+        updatedTask.setCreateDate(task.getCreateDate());
+
+        if (userService.getActiveStatus(request.getAssignee())) {
+            updatedTask.setAssignee(userService.getByUser(request.getAssignee()));
+
+            return taskDtoConverter.convert(taskRepository.save(updatedTask));
+        }
+
+        return null;
     }
 
 }

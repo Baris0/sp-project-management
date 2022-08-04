@@ -2,6 +2,7 @@ package com.projectmanagement.service;
 
 import com.projectmanagement.dto.UserDto;
 import com.projectmanagement.dto.converter.UserDtoConverter;
+import com.projectmanagement.dto.request.UpdateUserRequest;
 import com.projectmanagement.dto.request.UserCreateRequest;
 import com.projectmanagement.model.User;
 import com.projectmanagement.repository.UserRepository;
@@ -44,10 +45,6 @@ public class UserService {
         userRepository.deleteById(user.get().getId());
     }
 
-    protected User getByUserName(String userName) {
-        return userRepository.findUserByUserName(userName);
-    }
-
     public UserDto getByUser(String userName) {
         return userDtoConverter.convert(userRepository.findUserByUserName(userName));
     }
@@ -55,5 +52,21 @@ public class UserService {
     public boolean getActiveStatus(String userName) {
         User user = userRepository.findUserByUserName(userName);
         return user.isActive();
+    }
+
+    public UserDto update(String mail, UpdateUserRequest request) {
+        User user = userRepository.findUserByMail(mail);
+
+        User updatedUser = new User();
+        updatedUser.setUpdateDate(LocalDate.now());
+        updatedUser.setUserName(request.getUserName());
+        updatedUser.setFullName(request.getFullName());
+        updatedUser.setUserType(request.getUserType());
+        updatedUser.setActive(request.isActive());
+        updatedUser.setId(user.getId());
+        updatedUser.setCreateDate(user.getCreateDate());
+        updatedUser.setMail(user.getMail());
+
+        return userDtoConverter.convert(userRepository.save(updatedUser));
     }
 }

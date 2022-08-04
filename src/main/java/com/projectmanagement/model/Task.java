@@ -1,5 +1,6 @@
 package com.projectmanagement.model;
 
+import com.projectmanagement.dto.UserDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -27,6 +28,6 @@ public class Task {
 
     private LocalDate updateDate;
 
-    private User assignee;
+    private UserDto assignee;
 
 }

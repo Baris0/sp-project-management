@@ -1,6 +1,7 @@
 package com.projectmanagement.controller;
 
 import com.projectmanagement.dto.UserDto;
+import com.projectmanagement.dto.request.UpdateUserRequest;
 import com.projectmanagement.dto.request.UserCreateRequest;
 import com.projectmanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,11 @@ public class UserController {
     @GetMapping("{userName}")
     public ResponseEntity<UserDto> getByUserName(@PathVariable("userName") String userName) {
         return new ResponseEntity<>(userService.getByUser(userName), HttpStatus.OK);
+    }
+
+    @PutMapping("/{mail}")
+    public ResponseEntity<UserDto> update(@PathVariable("mail") String mail, @RequestBody UpdateUserRequest request) {
+        return new ResponseEntity<>(userService.update(mail, request), HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.projectmanagement.dto;
 
 import com.projectmanagement.model.PriorityType;
-import com.projectmanagement.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -25,5 +24,5 @@ public class TaskDto {
 
     private LocalDate updateDate;
 
-    private User assignee;
+    private UserDto assignee;
 }

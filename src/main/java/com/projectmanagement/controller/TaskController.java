@@ -2,6 +2,7 @@ package com.projectmanagement.controller;
 
 import com.projectmanagement.dto.TaskDto;
 import com.projectmanagement.dto.request.TaskCreateRequest;
+import com.projectmanagement.dto.request.UpdateTaskRequest;
 import com.projectmanagement.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,10 @@ public class TaskController {
     @GetMapping("/{taskCode}")
     public ResponseEntity<TaskDto> getByCode(@PathVariable("taskCode") int code) {
         return new ResponseEntity<>(taskService.getByCode(code), HttpStatus.OK);
+    }
+
+    @PutMapping("/{code}")
+    public ResponseEntity<TaskDto> update(@PathVariable("code") int code, @RequestBody UpdateTaskRequest request) {
+        return new ResponseEntity<>(taskService.update(code, request), HttpStatus.OK);
     }
 }
