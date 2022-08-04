@@ -1,4 +1,4 @@
-package com.projectmanagement.util;
+package com.projectmanagement.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,7 +11,7 @@ public class MailSendService {
 
     private final JavaMailSender mailSender;
 
-    public String sendMail(String to, String title, String body) {
+    public void sendMail(String to, String title, String body) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("projectmanagement");
         mailMessage.setTo(to);
@@ -19,7 +19,5 @@ public class MailSendService {
         mailMessage.setText(body);
 
         mailSender.send(mailMessage);
-
-        return mailMessage.toString();
     }
 }
